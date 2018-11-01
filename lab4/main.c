@@ -78,11 +78,13 @@ element pop() {
     return retVal;
 }
 
-void push(element newElement) {
+void push(int row, int col, int dir) {
 
     if(!isFull()) {
         top = top + 1;
-        stack[top] = newElement;
+        stack[top].row = row;
+        stack[top].col = col;
+        stack[top].dir = dir;
     } else {
         printf("Could not insert data, Stack is full.\n");
     }
@@ -163,10 +165,7 @@ int solveMaze() {
             } else if (canMove(nextRow, nextCol)) {
                 //legal move and haven't been there
                 mark[nextRow][nextCol] = 1;
-                current.row = row;
-                current.col = col;
-                current.dir = dir + 1;
-                push(current);
+                push(row, col, dir + 1);
                 row = nextRow;
                 col = nextCol;
                 dir = 0;
