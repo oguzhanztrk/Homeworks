@@ -152,7 +152,7 @@ int solveMaze() {
             } else if (canMove(nextRow, nextCol)) {
                 //legal move and haven't been there
                 mark[nextRow][nextCol] = 1;
-                push(nextRow, nextCol, ++dir);
+                push(row, col, ++dir);
                 row = nextRow;
                 col = nextCol;
                 dir = 0;
