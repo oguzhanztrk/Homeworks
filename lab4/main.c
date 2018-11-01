@@ -40,14 +40,14 @@ offsets moves[MOVE_COUNT] = {
     {0, 1},  // E
     {1, 1},  // SE
     {1, 0},  // S
-    {1, -1}  // SW
-    {0, -1}  // W
-    {-1, -1} // NW
+    {1, -1},  // SW
+    {0, -1},  // W
+    {-1, -1}, // NW
 }; /*array of moves for each direction*/
 
 
 
-element *stack[MAX_STACK_SIZE];
+element stack[MAX_STACK_SIZE];
 int top = -1;
 int isEmpty() {
 
@@ -65,19 +65,18 @@ int isFull() {
       return 0;
 }
 
-int peek() {
+element peek() {
    return  stack[top];
 }
-int pop() {
-
-
-   if(!isEmpty()) {
+element pop() {
+    if(!isEmpty()) {
 
       top = top - 1;
 
-   } else {
-      printf("Could not retrieve data, Stack is empty.\n");
-   }
+    } else {
+        printf("Could not retrieve data, Stack is empty.\n");
+    }
+    return peek();
 }
 
 void push(int row, int col, int dir) {
@@ -124,7 +123,7 @@ int isExit(int currRow, int currCol) {
 }
 
 int canMove(int currRow, int currCol) {
-    return mave[currRow][currCol] == 0 && mark[currRow][currCol] == 0;
+    return maze[currRow][currCol] == 0 && mark[currRow][currCol] == 0;
 }
 
 int solveMaze() {
@@ -140,8 +139,8 @@ int solveMaze() {
         for(dir = 0; dir < MOVE_COUNT; dir++) {
             move = moves[dir];
 
-            nextRow = current.row + move.row;
-            nextCol = current.col + move.col;
+            nextRow = current.row + move.vert;
+            nextCol = current.col + move.horiz;
 
             if(isExit(nextRow, nextCol)) {
                 return 1;
@@ -150,7 +149,7 @@ int solveMaze() {
                 mark[nextRow][nextCol] = 1;
                 push(nextRow, nextCol, dir);
             }
-        } 
+        }
     }
     printf("No path found\n");
     return 0;
