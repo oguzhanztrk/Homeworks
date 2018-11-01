@@ -100,14 +100,14 @@ void displayStack()
     else
     {
         printf ("\n The status of the stack is \n");
-        for (i = top; i >= 0; i--)
+        for (i = 0; i <= top; i++)
         {
             element curr = stack[i];
-            maze[curr.row][curr.col] = 2;
-            printf ("row: %d, col: %d, dir: %d ,{%d %d}\n", curr.row, curr.col, curr.dir,moves[curr.dir].row,moves[curr.dir].col);
+            printf ("row: %d, col: %d\n", curr.row, curr.col);
+
         }
     }
-    printf ("\n");
+
 }
 
 void displayMaze() {
@@ -161,6 +161,7 @@ int solveMaze() {
             nextCol = col + move.col;
 
             if(isExit(nextRow, nextCol)) {
+                push(row, col, dir);
                 return 1;
             } else if (canMove(nextRow, nextCol)) {
                 //legal move and haven't been there
@@ -188,7 +189,8 @@ int main()
     if (result) {
         printf("Solved\n");
         displayStack();
-        displayMaze();
+        //printf ("row: %d, col: %d\n", curr.row, curr.col);
+        printf("row: %d, col: %d\n",M,P);
 
 
     }
