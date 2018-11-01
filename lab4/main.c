@@ -130,8 +130,11 @@ int solveMaze() {
     element current;
     offsets move;
     int dir, nextRow, nextCol;
+    
     //initialize a stack to the maze's entrance coordinates
     //and direction to north;
+    push(1, 1, 0);
+
     while (!isEmpty()) {
         //move to position at top of stack
         current = pop();
