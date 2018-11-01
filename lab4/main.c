@@ -31,8 +31,8 @@ typedef struct {
 } element;
 
 typedef struct {
-    short int vert;
-    short int horiz;
+    short int row;
+    short int col;
 } offsets;
 offsets moves[MOVE_COUNT] = {
     {-1, 0}, // N
@@ -69,14 +69,13 @@ element peek() {
    return  stack[top];
 }
 element pop() {
+    element retVal = peek();
     if(!isEmpty()) {
-
       top = top - 1;
-
     } else {
         printf("Could not retrieve data, Stack is empty.\n");
     }
-    return peek();
+    return retVal;
 }
 
 void push(int row, int col, int dir) {
@@ -90,7 +89,7 @@ void push(int row, int col, int dir) {
         printf("Could not insert data, Stack is full.\n");
     }
 }
-void display ()
+void display()
 {
     int i;
     if (top == -1)
@@ -103,7 +102,7 @@ void display ()
         printf ("\n The status of the stack is \n");
         for (i = top; i >= 0; i--)
         {
-            printf ("%d\n", stack[i]);
+            printf ("row: %d, col: %d, dir: %d\n", stack[i].row, stack[i].col, stack[i].dir);
         }
     }
     printf ("\n");
@@ -129,8 +128,8 @@ int canMove(int currRow, int currCol) {
 int solveMaze() {
     element current;
     offsets move;
-    int dir, nextRow, nextCol;
-    
+    int dir, nextRow, nextCol, i = 0;
+
     //initialize a stack to the maze's entrance coordinates
     //and direction to north;
     push(1, 1, 0);
@@ -142,8 +141,8 @@ int solveMaze() {
         for(dir = 0; dir < MOVE_COUNT; dir++) {
             move = moves[dir];
 
-            nextRow = current.row + move.vert;
-            nextCol = current.col + move.horiz;
+            nextRow = current.row + move.row;
+            nextCol = current.col + move.col;
 
             if(isExit(nextRow, nextCol)) {
                 return 1;
