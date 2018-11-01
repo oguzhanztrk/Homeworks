@@ -104,7 +104,7 @@ void displayStack()
         {
             element curr = stack[i];
             maze[curr.row][curr.col] = 2;
-            printf ("row: %d, col: %d, dir: %d\n", curr.row, curr.col, curr.dir);
+            printf ("row: %d, col: %d, dir: %d ,{%d %d}\n", curr.row, curr.col, curr.dir,moves[curr.dir].row,moves[curr.dir].col);
         }
     }
     printf ("\n");
@@ -165,7 +165,7 @@ int solveMaze() {
             } else if (canMove(nextRow, nextCol)) {
                 //legal move and haven't been there
                 mark[nextRow][nextCol] = 1;
-                push(row, col, dir + 1);
+                push(row, col, dir);
                 row = nextRow;
                 col = nextCol;
                 dir = 0;
