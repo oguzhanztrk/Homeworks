@@ -104,7 +104,7 @@ void displayStack()
         {
             element curr = stack[i];
             maze[curr.row][curr.col] = 2;
-            printf ("row: %d, col: %d, dir: %d\n", curr, curr, curr);
+            printf ("row: %d, col: %d, dir: %d\n", curr.row, curr.col, curr.dir);
         }
     }
     printf ("\n");
@@ -188,8 +188,9 @@ int main()
     if (result) {
         printf("Solved\n");
         displayStack();
+        displayMaze();
 
-        for()
+
     }
     return 0;
 }
