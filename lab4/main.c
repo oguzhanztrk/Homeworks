@@ -78,18 +78,16 @@ element pop() {
     return retVal;
 }
 
-void push(int row, int col, int dir) {
+void push(element newElement) {
 
     if(!isFull()) {
         top = top + 1;
-        stack[top].row = row;
-        stack[top].col = col;
-        stack[top].dir = dir;
+        stack[top] = newElement;
     } else {
         printf("Could not insert data, Stack is full.\n");
     }
 }
-void display()
+void displayStack()
 {
     int i;
     if (top == -1)
@@ -102,11 +100,24 @@ void display()
         printf ("\n The status of the stack is \n");
         for (i = top; i >= 0; i--)
         {
-            printf ("row: %d, col: %d, dir: %d\n", stack[i].row, stack[i].col, stack[i].dir);
+            element curr = stack[i];
+            maze[curr.row][curr.col] = 2;
+            printf ("row: %d, col: %d, dir: %d\n", curr, curr, curr);
         }
     }
     printf ("\n");
 }
+
+void displayMaze() {
+    int i,j;
+    for(i = 0; i < ROW; i++) {
+        for(j = 0; j < COL; j++) {
+            printf("%d ", maze[i][j]);
+        }
+        printf("\n");
+    }
+}
+
 
 void deepCopyMazeToMark() {
     int i,j;
@@ -134,7 +145,7 @@ int solveMaze() {
     //and direction to north;
     push(1, 1, 0);
 
-    while (isEmpty()) {
+    while (!isEmpty()) {
         //move to position at top of stack
         current = pop();
         row = current.row;
@@ -152,7 +163,10 @@ int solveMaze() {
             } else if (canMove(nextRow, nextCol)) {
                 //legal move and haven't been there
                 mark[nextRow][nextCol] = 1;
-                push(row, col, ++dir);
+                current.row = row;
+                current.col = col;
+                current.dir = dir + 1;
+                push(current);
                 row = nextRow;
                 col = nextCol;
                 dir = 0;
@@ -174,7 +188,9 @@ int main()
     result = solveMaze();
     if (result) {
         printf("Solved\n");
-        display();
+        displayStack();
+
+        for()
     }
     return 0;
 }
