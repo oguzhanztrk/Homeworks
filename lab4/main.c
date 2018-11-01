@@ -128,28 +128,34 @@ int canMove(int currRow, int currCol) {
 int solveMaze() {
     element current;
     offsets move;
-    int dir, nextRow, nextCol, i = 0;
+    int dir, nextRow, nextCol, row, col;
 
     //initialize a stack to the maze's entrance coordinates
     //and direction to north;
     push(1, 1, 0);
 
-    while (!isEmpty()) {
+    while (isEmpty()) {
         //move to position at top of stack
         current = pop();
+        row = current.row;
+        col = current.col;
+        dir = current.dir;
 
-        for(dir = 0; dir < MOVE_COUNT; dir++) {
+        while(dir < MOVE_COUNT) {
             move = moves[dir];
 
-            nextRow = current.row + move.row;
-            nextCol = current.col + move.col;
+            nextRow = row + move.row;
+            nextCol = col + move.col;
 
             if(isExit(nextRow, nextCol)) {
                 return 1;
             } else if (canMove(nextRow, nextCol)) {
                 //legal move and haven't been there
                 mark[nextRow][nextCol] = 1;
-                push(nextRow, nextCol, dir);
+                push(nextRow, nextCol, ++dir);
+                row = nextRow;
+                col = nextCol;
+                dir = 0;
             }
         }
     }
@@ -166,6 +172,7 @@ int main()
     result = solveMaze();
     if (result) {
         printf("Solved\n");
+        display();
     }
     return 0;
 }
